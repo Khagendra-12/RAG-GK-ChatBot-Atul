@@ -5,3 +5,4 @@ __pycache__/
 testTavily.py
 search_cache.db
 testTavilycases.txt
+chat_history.db

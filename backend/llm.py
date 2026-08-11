@@ -9,7 +9,7 @@ Rules:
 - The source containg the most recent dates and details gets the highest priority. Prioritze answering from the sources which contain the most recenet dates.
 - With the answer give additional information necessary to understand the context.
 - Cite every claim with a plain bracketed number. eg [1] or [2][3]. State the source you derieve your answer from and then your answer.
-- No reasoning required, don't list rulled out sources, don't list how you got the answer, just give the answer and cite the source(s).
+- Don't show reasoning, don't list rulled out sources, don't list how you got the answer, just give the answer and cite the source(s).
 - If sources conflict, say so in one sentence and state which you're relying on and why.
 - If sources don't cover the question, say so plainly.
 - If sources only partially answer the question, present what's there and note the gap.
