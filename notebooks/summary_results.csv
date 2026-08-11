@@ -1,0 +1,7 @@
+model,score_pct,avg_latency_sec,avg_tokens
+Llama-3B,100.0,1.97,22.4
+Llama-8B,100.0,2.26,20.0
+Qwen2.5-3B,88.9,2.25,19.7
+Qwen2.5-1.5B,77.8,2.61,30.1
+Qwen2.5-7B,77.8,2.11,20.8
+Llama-1B,44.4,1.99,24.1

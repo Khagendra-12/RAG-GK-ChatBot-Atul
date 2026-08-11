@@ -1,0 +1,82 @@
+model,case,check_type,question,response,pass,latency_sec,tokens
+Llama-1B,citation_single_source,grounded_fact,Who created Python?,I don't have enough current information to answer this confidently.,False,1.96,13
+Llama-1B,citation_pick_right_source,grounded_fact,What year was Python first released?,I don't have enough current information to answer this confidently.,False,0.91,13
+Llama-1B,conflicting_sources,conflict,Did the company's quarterly revenue increase?,"Based on the provided sources, here's the answer:
+
+The question asks if the company's quarterly revenue increased. However, the sources contradict this.
+
+[1] Company X reported a 12% increase in quarterly revenue, beating analyst expectations.
+[2] According to internal filings, Company X's quarterly revenue declined by 5%.
+
+Since the revenue increase is not supported by the internal filings, the answer is ""I don't have enough current information to answer this confidently.""",True,9.89,95
+Llama-1B,insufficient_information,refusal,What is the population of the newly founded city of Arcadia Falls?,I don't have enough current information to answer this confidently.,True,0.78,13
+Llama-1B,hallucination_resistance,refusal,Who is the CEO of Zylora Robotics?,I don't have enough current information to answer this confidently.,True,0.75,13
+Llama-1B,noise_robustness,grounded_fact,What is the capital of France?,I don't have enough current information to answer this confidently.,False,0.83,13
+Llama-1B,multi_source_synthesis,multi_cite,"Which country is the city of Kyoto in, and what is Japan known for?","Based on the provided sources, here's the answer:
+
+The country where Kyoto is located is Japan.
+Japan is known for blending traditional and modern culture.",False,1.53,31
+Llama-1B,messy_real_world_context,grounded_fact,Who is the current UN Secretary-General?,I don't have enough current information to answer this confidently.,False,0.61,13
+Llama-1B,zero_sources,refusal,What is today's weather in a city that doesn't exist?,I don't have enough current information to answer this confidently.,True,0.64,13
+Llama-3B,citation_single_source,grounded_fact,Who created Python?,Guido van Rossum created Python [1].,True,1.17,11
+Llama-3B,citation_pick_right_source,grounded_fact,What year was Python first released?,"According to source [2], Python was first released to the public in 1991 [2]. This directly answers the question.",True,2.19,27
+Llama-3B,conflicting_sources,conflict,Did the company's quarterly revenue increase?,"No, the information from the sources is contradictory. 
+
+According to the Q2 Earnings Release [1], the company's quarterly revenue increased by 12%, beating analyst expectations.
+
+However, the Internal Filing Summary [2] states that the quarterly revenue declined by 5%.",True,5.16,57
+Llama-3B,insufficient_information,refusal,What is the population of the newly founded city of Arcadia Falls?,I don't have enough current information to answer this confidently.,True,1.17,13
+Llama-3B,hallucination_resistance,refusal,Who is the CEO of Zylora Robotics?,I don't have enough current information to answer this confidently.,True,1.15,13
+Llama-3B,noise_robustness,grounded_fact,What is the capital of France?,"According to source [2], Paris is the capital and most populous city of France.",True,1.55,18
+Llama-3B,multi_source_synthesis,multi_cite,"Which country is the city of Kyoto in, and what is Japan known for?",The city of Kyoto is in Japan [1]. Japan is known for blending traditional and modern culture [2].,True,1.91,23
+Llama-3B,messy_real_world_context,grounded_fact,Who is the current UN Secretary-General?,"The current UN Secretary-General is António Guterres, who took office on 1 January 2017 [1].",True,2.21,27
+Llama-3B,zero_sources,refusal,What is today's weather in a city that doesn't exist?,I don't have enough current information to answer this confidently.,True,1.24,13
+Llama-8B,citation_single_source,grounded_fact,Who created Python?,Guido van Rossum [1].,True,1.6,9
+Llama-8B,citation_pick_right_source,grounded_fact,What year was Python first released?,1991 [2],True,0.89,6
+Llama-8B,conflicting_sources,conflict,Did the company's quarterly revenue increase?,"The information provided by the sources is conflicting. 
+
+According to [1], the company's quarterly revenue increased by 12%. 
+However, according to [2], the company's quarterly revenue declined by 5%. 
+
+I don't have enough current information to determine the actual increase or decrease in the company's quarterly revenue.",True,6.3,66
+Llama-8B,insufficient_information,refusal,What is the population of the newly founded city of Arcadia Falls?,I don't have enough current information to answer this confidently.,True,1.53,13
+Llama-8B,hallucination_resistance,refusal,Who is the CEO of Zylora Robotics?,I don't have enough current information to answer this confidently.,True,1.64,13
+Llama-8B,noise_robustness,grounded_fact,What is the capital of France?,The capital of France is Paris [2].,True,1.52,10
+Llama-8B,multi_source_synthesis,multi_cite,"Which country is the city of Kyoto in, and what is Japan known for?",Kyoto is in Japan [1]. Japan is known for blending traditional and modern culture [2].,True,2.3,21
+Llama-8B,messy_real_world_context,grounded_fact,Who is the current UN Secretary-General?,"António Guterres, the ninth Secretary-General of the United Nations, took office on 1 January 2017 [1].",True,3.01,29
+Llama-8B,zero_sources,refusal,What is today's weather in a city that doesn't exist?,I don't have enough current information to answer this confidently.,True,1.52,13
+Qwen2.5-1.5B,citation_single_source,grounded_fact,Who created Python?,Guido van Rossum created Python. [1],True,1.09,12
+Qwen2.5-1.5B,citation_pick_right_source,grounded_fact,What year was Python first released?,"According to source [2], Python was first released to the public in 1991.",True,1.72,21
+Qwen2.5-1.5B,conflicting_sources,conflict,Did the company's quarterly revenue increase?,"Based on the information from the two sources:
+
+Source 1 (Q2 Earnings Release) states that Company X reported a 12% increase in quarterly revenue, which beat analyst expectations.
+
+Source 2 (Internal Filing Summary) indicates that according to internal filings, Company X's quarterly revenue declined by 5%.
+
+The conflicting data suggests there might be an error or inconsistency between the two reports. However, based solely on the first source, it appears that Company X experienced an increase in its quarterly revenue of 12%. Therefore, the company did experience an increase in its quarterly revenue as per the first source.",True,10.74,126
+Qwen2.5-1.5B,insufficient_information,refusal,What is the population of the newly founded city of Arcadia Falls?,I don't have enough current information to answer this confidently.,True,1.09,13
+Qwen2.5-1.5B,hallucination_resistance,refusal,Who is the CEO of Zylora Robotics?,I don't have enough current information to answer this confidently.,True,1.12,13
+Qwen2.5-1.5B,noise_robustness,grounded_fact,What is the capital of France?,"The capital of France is Paris. According to source [2], Paris is the capital and most populous city of France.",True,2.05,25
+Qwen2.5-1.5B,multi_source_synthesis,multi_cite,"Which country is the city of Kyoto in, and what is Japan known for?",Kyoto is located in Japan. Japan is known for its blend of traditional and modern culture.,False,1.68,20
+Qwen2.5-1.5B,messy_real_world_context,grounded_fact,Who is the current UN Secretary-General?,"The current UN Secretary-General is António Guterres. He took office on January 1, 2017.",False,2.56,28
+Qwen2.5-1.5B,zero_sources,refusal,What is today's weather in a city that doesn't exist?,I don't have enough current information to answer this confidently.,True,1.45,13
+Qwen2.5-3B,citation_single_source,grounded_fact,Who created Python?,Guido van Rossum created Python. [1],True,1.59,12
+Qwen2.5-3B,citation_pick_right_source,grounded_fact,What year was Python first released?,[2] Python was first released to the public in 1991.,True,2.32,18
+Qwen2.5-3B,conflicting_sources,conflict,Did the company's quarterly revenue increase?,"No, the company's quarterly revenue did not increase. According to [1], Company X reported a 12% increase in quarterly revenue, while [2] states that the quarterly revenue declined by 5%. These figures contradict each other, indicating conflicting information about the revenue change.",True,6.1,58
+Qwen2.5-3B,insufficient_information,refusal,What is the population of the newly founded city of Arcadia Falls?,I don't have enough current information to answer this confidently [1],True,1.66,15
+Qwen2.5-3B,hallucination_resistance,refusal,Who is the CEO of Zylora Robotics?,I don't have enough current information to answer this confidently.,True,1.48,13
+Qwen2.5-3B,noise_robustness,grounded_fact,What is the capital of France?,The capital of France is Paris. [2],True,1.56,11
+Qwen2.5-3B,multi_source_synthesis,multi_cite,"Which country is the city of Kyoto in, and what is Japan known for?","The city of Kyoto is in Japan.
+
+Japan is known for blending traditional and modern culture [2].",False,2.45,21
+Qwen2.5-3B,messy_real_world_context,grounded_fact,Who is the current UN Secretary-General?,The current UN Secretary-General is António Guterres. [1],True,1.82,17
+Qwen2.5-3B,zero_sources,refusal,What is today's weather in a city that doesn't exist?,I don't have enough current information to answer this confidently,True,1.3,12
+Qwen2.5-7B,citation_single_source,grounded_fact,Who created Python?,Python was created by Guido van Rossum [1].,True,1.56,13
+Qwen2.5-7B,citation_pick_right_source,grounded_fact,What year was Python first released?,Python was first released to the public in 1991 [2].,True,1.71,17
+Qwen2.5-7B,conflicting_sources,conflict,Did the company's quarterly revenue increase?,"The sources conflict. The Q2 Earnings Release indicates a 12% increase in quarterly revenue, while the Internal Filing Summary suggests a 5% decline. I don't have enough current information to answer this confidently based on the provided sources.",True,4.61,52
+Qwen2.5-7B,insufficient_information,refusal,What is the population of the newly founded city of Arcadia Falls?,I don't have enough current information to answer this confidently.,True,1.4,13
+Qwen2.5-7B,hallucination_resistance,refusal,Who is the CEO of Zylora Robotics?,I don't have enough current information to answer this confidently.,True,1.39,13
+Qwen2.5-7B,noise_robustness,grounded_fact,What is the capital of France?,The capital of France is Paris [n2].,False,1.51,11
+Qwen2.5-7B,multi_source_synthesis,multi_cite,"Which country is the city of Kyoto in, and what is Japan known for?","The city of Kyoto is in Japan. Japan is known for blending traditional and modern culture. [1, 2]",False,2.53,25
+Qwen2.5-7B,messy_real_world_context,grounded_fact,Who is the current UN Secretary-General?,The current UN Secretary-General is António Guterres [1].,True,1.72,16
+Qwen2.5-7B,zero_sources,refusal,What is today's weather in a city that doesn't exist?,"I don't have enough current information to answer this confidently, as there is no city that exists for me to provide weather updates.",True,2.52,27

@@ -1,0 +1,137 @@
+======================================================================
+CASE: time_sensitive
+Query: current stock price of Apple today
+Watching for: Does published_date come back? Note if it's None.
+======================================================================
+-> 5 results returned
+
+[1] Buy or Sell Apple Stock - AAPL Stock Price Quote & News
+    URL: https://robinhood.com/us/en/stocks/AAPL
+    Published: None
+    Text preview: # Apple. #### Trade Apple 24 hours a day, five days a week on Robinhood. As of today, Apple(AAPL) shares are valued at $314.96. The company's market c...
+
+[2] Apple Stock Price Quote - NASDAQ: AAPL
+    URL: https://www.morningstar.com/stocks/xnas/aapl/quote
+    Published: None
+    Text preview: *   [Stocks](https://www.morningstar.com/stocks). *   [Stocks](https://www.morningstar.com/stocks). *   [All Products and Services](https://www.mornin...
+
+[3] AAPL Stock Quote Price and Forecast
+    URL: https://www.cnn.com/markets/stocks/AAPL
+    Published: None
+    Text preview: [Markets](https://www.cnn.com/markets). [Markets](https://www.cnn.com/markets). * [US](https://www.cnn.com/us). * [Markets](https://www.cnn.com/market...
+
+[4] Apple Inc. (AAPL) Stock Price, News, Quote & History - Yahoo Finance
+    URL: https://finance.yahoo.com/quote/AAPL
+    Published: None
+    Text preview: [Latest](https://finance.yahoo.com/topic/latest-news/). 4. [Stock market](https://finance.yahoo.com/topic/stock-market-news/). 6. [Crypto](https://fin...
+
+[5] AAPL: Apple Inc - Stock Price, Quote and News
+    URL: https://www.cnbc.com/quotes/AAPL
+    Published: None
+    Text preview: [Markets](https://www.cnbc.com/markets/). *   [U.S. Markets](https://www.cnbc.com/us-markets/). *   [Currencies](https://www.cnbc.com/currencies/). * ...
+
+
+======================================================================
+CASE: ambiguous_broad
+Query: latest news
+Watching for: How noisy/unfocused are the results?
+======================================================================
+-> 5 results returned
+
+[1] ABC News - Breaking News, Latest News and Videos
+    URL: https://abcnews.com
+    Published: None
+    Text preview: [![Image 4](https://i.abcnewsfe.com/a/7783b965-ae50-4ee3-9dd0-93bccb562f87/fbi-ht-jt-260707_1783458210494_hpMain_16x9.jpg)](https://abcnews.com/US/man...
+
+[2] The Washington Post - Breaking news and latest headlines, U.S. ...
+    URL: https://www.washingtonpost.com
+    Published: None
+    Text preview: Logo of The Washington Post. Leaders of the Maine Democratic Party are still working toward a process to replace Graham Platner, without angering his ...
+
+[3] CBS News | Breaking news, top stories & today's latest headlines
+    URL: https://www.cbsnews.com
+    Published: None
+    Text preview: Senator Lindsey Graham Speaks On President Trump's Announcement Of Troop Withdrawal In Syria. #### Sen. Lindsey Graham's cause of death was aortic dis...
+
+[4] Iran war live: Trump says US ‘reinstating’ Iran blockade, will charge ships
+    URL: https://www.aljazeera.com/news/liveblog/2026/7/13/iran-war-live-us-bombs-iranian-cities-again-as-hormuz-standoff-intensifies
+    Published: None
+    Text preview: *   [Live updates](https://www.aljazeera.com/news/liveblog/2026/7/13/iran-war-live-us-bombs-iranian-cities-again-as-hormuz-standoff-intensifies). *   ...
+
+[5] CNN: Breaking News, Latest News and Videos
+    URL: https://www.cnn.com
+    Published: None
+    Text preview: Senate Republicans overnight released a new version of the "One, Big, Beautiful Bill," as they approach U.S. President Donald Trump's July 4 deadline....
+
+
+======================================================================
+CASE: obscure_or_fake
+Query: the quarterly earnings report of Zyxtron Dynamics Corp
+Watching for: Does it return empty/irrelevant results without crashing?
+======================================================================
+-> 5 results returned
+
+[1] General Dynamics Reports First-Quarter 2026 Financial ...
+    URL: https://www.prnewswire.com/news-releases/general-dynamics-reports-first-quarter-2026-financial-results-302756118.html
+    Published: None
+    Text preview: ## News Releases Overview. ## View All Auto & Transportation. ## Business Technology Overview. ## Business Technology. ## View All Business Technology...
+
+[2] General Dynamics - Financial Reports - Quarterly Financial Results
+    URL: https://investorrelations.gd.com/financial-reports/quarterly-financial-results/default.aspx
+    Published: None
+    Text preview: ## Financial Reports. ## Quarterly Financial Results. ## Email Alerts. After submitting your request, you will receive an activation email to the requ...
+
+[3] Quarterly Results - AngioDynamics - Investors
+    URL: https://investors.angiodynamics.com/financial-information/quarterly-results
+    Published: None
+    Text preview: AngioDynamics' Fiscal 2021 Third Quarter Financial Results · AngioDynamics to Report Fiscal 2021 Third Quarter Financial Results on March 30, 2021 · F...
+
+[4] Financial Summary
+    URL: https://investor.textron.com/financial/financial-summary/default.aspx
+    Published: None
+    Text preview: # Financial Summary. ## Latest Quarters. ## Financial Summary Table. ## Quarterly Results Archive. ## Quick Links. ## Investor Email....
+
+[5] Financial Reports of Grid Dynamics
+    URL: https://www.griddynamics.com/investors/financial-reports
+    Published: None
+    Text preview: You can’t brute‑force AI into your hardest technology problems and hope something works. It needs a disciplined constraints discovery process and stre...
+
+
+======================================================================
+CASE: normal_gk
+Query: who is the current secretary general of the United Nations
+Watching for: Baseline case — should return clean, relevant results.
+======================================================================
+-> 5 results returned
+
+[1] About the Secretary-General
+    URL: https://www.un.org/sg/en/content/about-secretary-general-0
+    Published: None
+    Text preview: # United Nations  Secretary-General. Portrait of the United Nations Secretary-General António Guterres. António Guterres, the ninth Secretary-General ...
+
+[2] Biography | Secretary-General
+    URL: https://www.un.org/sg/en/content/sg/biography
+    Published: None
+    Text preview: *   [English](https://www.un.org/sg/en/content/sg/biography). [Secretary-General](https://www.un.org/sg/en "Secretary-General"). *   [English](https:/...
+
+[3] António Guterres - Secretary-General of the United Nations
+    URL: https://www.linkedin.com/in/antonio-guterres
+    Published: None
+    Text preview: António Guterres
+Secretary-General of the United Nations
+N/A
+N/A connections, 1150841 followers
+
+
+About
+I am the ninth Secretary-General of the United...
+
+[4] António Guterres
+    URL: https://en.wikipedia.org/wiki/Ant%C3%B3nio_Guterres
+    Published: None
+    Text preview: | 9th Secretary-General of the United Nations |. | **In office** 28 October 1995 – 6 April 2002 |. | Secretary-General of the Socialist Party "Secreta...
+
+[5] António Guterres secures second term as UN Secretary- ...
+    URL: https://unis.unvienna.org/unis/topics/related/2021/Antonio-guterres-secures-second-term.html
+    Published: None
+    Text preview: #### António Guterres has been re-appointed as UN Secretary-General for a second term, pledging as his priority, to continue helping the world chart a...
