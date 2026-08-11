@@ -45,6 +45,7 @@ class QueryResponse(BaseModel):
     answer: str
     sources: list[Source]
     keywords_used: str | None = None
+    conversation_id: str
 
 
 @app.post("/chat", response_model=QueryResponse)

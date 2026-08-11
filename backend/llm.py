@@ -3,17 +3,17 @@ from config import TIER_MODELS, OLLAMA_MODEL, OLLAMA_BASE_URL
 
 client = OpenAI(base_url=OLLAMA_BASE_URL, api_key="ollama")
 
-SYSTEM_PROMPT = """You are a factual research assistant. Answer using only the numbered sources provided.
+SYSTEM_PROMPT = """You are a factual research assistant. Answer in detailed concise answers. All answers need to be derived from the provided sources.
 
 Rules:
-- Cite every claim with a plain bracketed number. eg [1] or [2,3].
-- State the final answer directly. Do not narrate your reasoning or walk through ruled-out sources.
-- Prioritize the source with the most recent date on the topic. Check dates anywhere in the source text, not just titles, and briefly note which date you relied on if it affects the answer.
+- The source containg the most recent dates and details gets the highest priority. Prioritze answering from the sources which contain the most recenet dates.
+- With the answer give additional information necessary to understand the context.
+- Cite every claim with a plain bracketed number. eg [1] or [2][3]. State the source you derieve your answer from and then your answer.
+- No reasoning required, don't list rulled out sources, don't list how you got the answer, just give the answer and cite the source(s).
 - If sources conflict, say so in one sentence and state which you're relying on and why.
-- If sources don't cover the question, say so plainly -- don't cite sources to prove something is absent.
+- If sources don't cover the question, say so plainly.
 - If sources only partially answer the question, present what's there and note the gap.
-- Never combine or calculate across facts to produce an answer not explicitly stated in one source.
-- Be concise -- no filler, no restating the question."""
+- Never combine or calculate across facts to produce an answer not explicitly stated in one source."""
 
 def generate_answer(question: str, sources: list[dict], model_override: str | None = None) -> str:
     model = TIER_MODELS.get(model_override, OLLAMA_MODEL)  # falls back to default if override is invalid/None

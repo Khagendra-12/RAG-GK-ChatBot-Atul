@@ -17,6 +17,7 @@ export function SourceCard({ source, number, isHighlighted }: SourceCardProps) {
       href={source.url}
       target="_blank"
       rel="noopener noreferrer"
+      data-source-card
       className={`block p-4 rounded-lg border transition-all ${
         isHighlighted
           ? 'bg-accent/10 border-accent shadow-sm'

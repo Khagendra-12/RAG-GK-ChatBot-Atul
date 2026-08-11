@@ -18,6 +18,7 @@ export interface ChatResponse {
   answer: string;
   sources: Source[];
   keywords_used: string | null;
+  conversation_id: string;
 }
 
 export interface Message {
@@ -35,11 +36,12 @@ export interface Message {
 export async function sendChatMessage(
   question: string,
   modelTier: 'lite' | 'standard' | null,
+  conversationId: string | null,
 ): Promise<ChatResponse> {
   const response = await fetch(API_ENDPOINTS.CHAT, {
     method: 'POST',
     headers: { 'Content-Type': 'application/json' },
-    body: JSON.stringify({ question, model_tier: modelTier }),
+    body: JSON.stringify({ question, model_tier: modelTier, conversation_id: conversationId }),
   });
 
   if (!response.ok) {

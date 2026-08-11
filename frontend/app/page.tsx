@@ -9,13 +9,13 @@ import { WelcomeSection } from '@/components/welcome-section';
 
 export default function Page() {
   const [messages, setMessages] = useState<Message[]>([]);
-  const [modelTier, setModelTier] = useState<'lite' | 'standard' | null>(null);
+  const [modelTier, setModelTier] = useState<'lite' | 'standard' | null>('standard');
   const [isLoading, setIsLoading] = useState(false);
   const [isClearing, setIsClearing] = useState(false);
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const loadingStageRef = useRef<NodeJS.Timeout>();
+  const [conversationId, setConversationId] = useState<string | null>(null);
 
-  // Auto-scroll to bottom
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
   };
@@ -54,7 +54,6 @@ export default function Page() {
   }, [isLoading]);
 
   const handleSendMessage = async (question: string) => {
-    // Add user message
     const userMessage: Message = {
       id: `user-${Date.now()}`,
       type: 'user',
@@ -64,7 +63,6 @@ export default function Page() {
 
     setMessages((prev) => [...prev, userMessage]);
 
-    // Add loading message
     const loadingMessage: Message = {
       id: `loading-${Date.now()}`,
       type: 'assistant',
@@ -76,9 +74,12 @@ export default function Page() {
     setIsLoading(true);
 
     try {
-      const response = await sendChatMessage(question, modelTier);
+      const response = await sendChatMessage(question, modelTier, conversationId);
 
-      // Replace loading message with actual response
+      if (!conversationId) {
+      setConversationId(response.conversation_id);
+    }
+
       setMessages((prev) => {
         const updated = [...prev];
         const loadingIndex = updated.findIndex((m) => m.id === loadingMessage.id);
@@ -120,6 +121,7 @@ export default function Page() {
 
   const handleNewChat = () => {
     setMessages([]);
+    setConversationId(null);
   };
 
   const handleClearCache = async () => {

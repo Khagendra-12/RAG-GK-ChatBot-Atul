@@ -26,7 +26,7 @@ def source_recency_bonus(text: str, max_range: int = 5) -> float:
     return 0.08 if year_range <= max_range else 0.0  # small nudge, not a re-sort
 
 
-def rerank_sources(question: str, sources: list[dict], top_k_chunks: int = 8) -> list[dict]:
+def rerank_sources(question: str, sources: list[dict], top_k_chunks: int = 5) -> list[dict]:
     if not sources:
         return []
 

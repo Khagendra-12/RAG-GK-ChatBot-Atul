@@ -4,7 +4,7 @@ import time
 from pathlib import Path
 
 DB_PATH = Path(__file__).parent / "search_cache.db"
-TTL_SECONDS = 600
+TTL_SECONDS = 1800
 
 def purge_expired(max_age_seconds: int = 86500) -> int:
     conn = _get_conn()

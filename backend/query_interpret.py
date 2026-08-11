@@ -17,6 +17,8 @@ Where:
 If the question doesn't give enough detail to identify a clear subject, respond with:
 CLARIFY: <a short question asking the user to specify what's missing>
 
+- Treat words like "Last" with ambiguity, if the user asks about an ongoing series of events, last means latest. But if they refer to a single event, last means most recent.
+
 Examples:
 "who won the last f1 grand prix" -> KEYWORDS: f1 grand prix winner from the last race
 "what is the current status of the trade deal" -> KEYWORDS: current trade deal status

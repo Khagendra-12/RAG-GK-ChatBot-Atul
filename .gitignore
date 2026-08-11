@@ -1,8 +1,7 @@
 .env
-.ragenv
-/
+.ragenv/
 __pycache__/
 *.db
 testTavily.py
 search_cache.db
-testTavilycaess.txt
+testTavilycases.txt
