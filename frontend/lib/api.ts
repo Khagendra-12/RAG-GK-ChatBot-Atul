@@ -33,6 +33,21 @@ export interface Message {
   error?: string;
 }
 
+export interface ConversationSummary {
+  conversation_id: string;
+  preview: string;
+  last_timestamp: number;
+  message_count: number;
+}
+
+export interface ConversationMessage {
+  question: string;
+  answer: string;
+  sources: Source[];
+  keywords_used: string | null;
+  timestamp: number;
+}
+
 export async function sendChatMessage(
   question: string,
   modelTier: 'lite' | 'standard' | null,
@@ -51,18 +66,6 @@ export async function sendChatMessage(
   return response.json();
 }
 
-export async function clearCache(): Promise<{ cleared_entries: number }> {
-  const response = await fetch(API_ENDPOINTS.CLEAR_CACHE, {
-    method: 'POST',
-    headers: { 'Content-Type': 'application/json' },
-  });
-
-  if (!response.ok) {
-    throw new Error('Failed to clear cache');
-  }
-
-  return response.json();
-}
 
 export async function getAvailableModels(): Promise<{ available_tiers: string[] }> {
   const response = await fetch(API_ENDPOINTS.MODELS);
@@ -83,3 +86,26 @@ export async function checkHealth(): Promise<{ status: string }> {
 
   return response.json();
 }
+
+
+export async function getConversations(): Promise<ConversationSummary[]> {
+  const res = await fetch(API_ENDPOINTS.CONVERSATIONS);
+  if (!res.ok) throw new Error('Failed to load chat history');
+  return res.json();
+}
+
+export async function getConversation(id: string): Promise<ConversationMessage[]> {
+  const res = await fetch(`${API_ENDPOINTS.CONVERSATIONS}/${id}`);
+  if (!res.ok) throw new Error('Failed to load conversation');
+  return res.json();
+}
+
+export async function clearCache(): Promise<{ cleared_entries: number }> {
+  const response = await fetch(API_ENDPOINTS.CLEAR_CACHE, {
+    method: 'POST',
+    headers: { 'Content-Type': 'application/json' },
+  });
+  if (!response.ok) throw new Error('Failed to clear cache');
+  return response.json();
+}
+

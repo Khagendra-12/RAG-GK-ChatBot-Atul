@@ -1,11 +1,12 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { sendChatMessage, clearCache, Message } from '@/lib/api';
+import { sendChatMessage, clearCache, getConversation, Message, ConversationMessage } from '@/lib/api';
 import { TopBar } from '@/components/top-bar';
 import { ChatMessage } from '@/components/chat-message';
 import { MessageInput } from '@/components/message-input';
-import { WelcomeSection } from '@/components/welcome-section';
+import { ChatHistoryMenu } from '@/components/chat-history-menu';
+import { HomeScreen } from '@/components/home-screen';
 
 export default function Page() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -24,14 +25,9 @@ export default function Page() {
     scrollToBottom();
   }, [messages]);
 
-  // Simulate loading stages
   useEffect(() => {
     if (isLoading) {
-      const stages = [
-        'Searching the web...',
-        'Reading sources...',
-        'Writing answer...',
-      ];
+      const stages = ['Searching the web...', 'Reading sources...', 'Writing answer...'];
       let stageIndex = 0;
 
       const updateStage = () => {
@@ -77,8 +73,8 @@ export default function Page() {
       const response = await sendChatMessage(question, modelTier, conversationId);
 
       if (!conversationId) {
-      setConversationId(response.conversation_id);
-    }
+        setConversationId(response.conversation_id);
+      }
 
       setMessages((prev) => {
         const updated = [...prev];
@@ -97,7 +93,6 @@ export default function Page() {
       });
     } catch (error) {
       const errorMessage = error instanceof Error ? error.message : 'Unknown error occurred';
-      // Replace loading message with error
       setMessages((prev) => {
         const updated = [...prev];
         const loadingIndex = updated.findIndex((m) => m.id === loadingMessage.id);
@@ -135,7 +130,6 @@ export default function Page() {
   };
 
   const handleCitationClick = (sourceIndex: number) => {
-    // Find the source card in the DOM and highlight it
     setTimeout(() => {
       const sourceCards = document.querySelectorAll('[data-source-card]');
       if (sourceCards[sourceIndex]) {
@@ -148,28 +142,62 @@ export default function Page() {
     }, 100);
   };
 
+  // Turns a stored conversation (question/answer pairs) into the flat
+  // user/assistant message list the UI already knows how to render.
+  const expandConversation = (turns: ConversationMessage[]): Message[] => {
+    const expanded: Message[] = [];
+    turns.forEach((turn, i) => {
+      expanded.push({
+        id: `user-${i}-${turn.timestamp}`,
+        type: 'user',
+        question: turn.question,
+        timestamp: turn.timestamp * 1000,
+      });
+      expanded.push({
+        id: `assistant-${i}-${turn.timestamp}`,
+        type: 'assistant',
+        answer: turn.answer,
+        sources: turn.sources,
+        keywords_used: turn.keywords_used,
+        timestamp: turn.timestamp * 1000,
+      });
+    });
+    return expanded;
+  };
+
+  const handleSelectConversation = async (convId: string) => {
+    const turns = await getConversation(convId);
+    setConversationId(convId);
+    setMessages(expandConversation(turns));
+  };
+
   return (
     <div className="flex flex-col h-screen bg-background">
-      <TopBar
-        modelTier={modelTier}
-        onModelTierChange={setModelTier}
-        onNewChat={handleNewChat}
-        onClearCache={handleClearCache}
-        isClearing={isClearing}
-      />
+      <div className="flex items-center justify-between">
+        <TopBar
+          modelTier={modelTier}
+          onModelTierChange={setModelTier}
+          onNewChat={handleNewChat}
+          onClearCache={handleClearCache}
+          isClearing={isClearing}
+        />
+        <div className="pr-4">
+          <ChatHistoryMenu onSelectConversation={handleSelectConversation} />
+        </div>
+      </div>
 
       <div className="flex-1 overflow-y-auto">
-        <div className="max-w-5xl mx-auto px-4">
+        <div className="max-w-5xl mx-auto px-4 h-full">
           {messages.length === 0 ? (
-            <WelcomeSection onSuggestedQuestion={handleSendMessage} />
+            <HomeScreen
+              onSubmit={handleSendMessage}
+              onClearCache={handleClearCache}
+              isClearing={isClearing}
+            />
           ) : (
             <div className="py-8">
               {messages.map((message) => (
-                <ChatMessage
-                  key={message.id}
-                  message={message}
-                  onCitationClick={handleCitationClick}
-                />
+                <ChatMessage key={message.id} message={message} onCitationClick={handleCitationClick} />
               ))}
             </div>
           )}
@@ -177,11 +205,13 @@ export default function Page() {
         </div>
       </div>
 
-      <MessageInput
-        onSubmit={handleSendMessage}
-        disabled={isLoading}
-        placeholder="Ask a question about news, politics, stocks, laws, or current events..."
-      />
+      {messages.length > 0 && (
+        <MessageInput
+          onSubmit={handleSendMessage}
+          disabled={isLoading}
+          placeholder="Ask a question about news, politics, stocks, laws, or current events..."
+        />
+      )}
     </div>
   );
 }

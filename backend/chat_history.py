@@ -45,7 +45,6 @@ def save_message(conversation_id: str, question: str, answer: str, sources: list
 
 
 def get_conversation(conversation_id: str) -> list[dict]:
-    """Returns all messages in a conversation, oldest first."""
     conn = _get_conn()
     rows = conn.execute(
         """SELECT question, answer, sources_json, keywords_used, timestamp
@@ -67,29 +66,27 @@ def get_conversation(conversation_id: str) -> list[dict]:
 
 
 def list_conversations() -> list[dict]:
-    """Returns one summary row per conversation: id, first question (as a
-    preview title), and the most recent message timestamp -- for a sidebar
-    list, most recent first."""
     conn = _get_conn()
     rows = conn.execute("""
-        SELECT conversation_id,
-               MIN(question) as first_question,
-               MAX(timestamp) as last_timestamp,
-               COUNT(*) as message_count
-        FROM chat_history
-        GROUP BY conversation_id
-        ORDER BY last_timestamp DESC
+        SELECT h.conversation_id, h.question, h.keywords_used, h.timestamp AS first_ts,
+               (SELECT MAX(timestamp) FROM chat_history WHERE conversation_id = h.conversation_id) AS last_ts,
+               (SELECT COUNT(*) FROM chat_history WHERE conversation_id = h.conversation_id) AS message_count
+        FROM chat_history h
+        WHERE h.id IN (
+            SELECT MIN(id) FROM chat_history GROUP BY conversation_id
+        )
+        ORDER BY last_ts DESC
     """).fetchall()
     conn.close()
 
     return [
         {
             "conversation_id": cid,
-            "preview": first_q[:60],
-            "last_timestamp": ts,
+            "preview": (keywords or question)[:60],
+            "last_timestamp": last_ts,
             "message_count": count,
         }
-        for cid, first_q, ts, count in rows
+        for cid, question, keywords, first_ts, last_ts, count in rows
     ]
 
 
