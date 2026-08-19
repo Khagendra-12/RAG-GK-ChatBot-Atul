@@ -1,6 +1,6 @@
 'use client';
 
-import { Trash2 } from 'lucide-react';
+import { Trash2, History } from 'lucide-react';
 import { Button } from '@/components/ui/button';
 import { useState } from 'react';
 
@@ -9,6 +9,7 @@ interface TopBarProps {
   onModelTierChange: (tier: 'lite' | 'standard' | null) => void;
   onNewChat: () => void;
   onClearCache: () => Promise<void>;
+  onHistory: () => void;
   isClearing?: boolean;
 }
 
@@ -17,6 +18,7 @@ export function TopBar({
   onModelTierChange,
   onNewChat,
   onClearCache,
+  onHistory,
   isClearing,
 }: TopBarProps) {
   const [showClearConfirm, setShowClearConfirm] = useState(false);
@@ -24,6 +26,7 @@ export function TopBar({
 
   const handleClearCache = async () => {
     setShowClearConfirm(false);
+
     try {
       await onClearCache();
       setClearToast('Cache cleared');
@@ -37,37 +40,20 @@ export function TopBar({
   return (
     <>
       <div className="sticky top-0 z-40 border-b border-border bg-background/95 backdrop-blur">
-        <div className="max-w-5xl mx-auto px-4 py-3 flex items-center justify-between gap-4">
-          <div className="flex-1">
-            <h1 className="text-lg font-semibold text-foreground">General Knowledge Assistant</h1>
-          </div>
+        <div className="w-full px-4 py-3 grid grid-cols-3 items-center">
 
+          {/* LEFT SIDE: History + Clear Cache */}
           <div className="flex items-center gap-3">
-            {/* Model Tier Selector */}
-            <div className="flex items-center bg-muted rounded-lg p-1">
-              <button
-                onClick={() => onModelTierChange('lite')}
-                className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${
-                  modelTier === 'lite'
-                    ? 'bg-accent text-accent-foreground'
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
-                title="Lite: faster responses"
-              >
-                Lite
-              </button>
-              <button
-                onClick={() => onModelTierChange('standard')}
-                className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${
-                  modelTier === 'standard'
-                    ? 'bg-accent text-accent-foreground'
-                    : 'text-muted-foreground hover:text-foreground'
-                }`}
-                title="Standard: more accurate responses"
-              >
-                Standard
-              </button>
-            </div>
+
+            {/* Chat History Button */}
+            <button
+              onClick={onHistory}
+              className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted transition-colors"
+              title="Chat history"
+            >
+              <History className="w-4 h-4" />
+              History
+            </button>
 
             {/* Clear Cache Button */}
             <div className="relative">
@@ -79,9 +65,13 @@ export function TopBar({
                 <Trash2 className="w-4 h-4" />
               </button>
 
+              {/* Clear Cache Confirmation */}
               {showClearConfirm && (
-                <div className="absolute right-0 top-full mt-2 bg-background border border-border rounded-lg shadow-lg p-3 w-48 z-50">
-                  <p className="text-sm text-foreground mb-3">Clear all cached results?</p>
+                <div className="absolute left-0 top-full mt-2 bg-background border border-border rounded-lg shadow-lg p-3 w-48 z-50">
+                  <p className="text-sm text-foreground mb-3">
+                    Clear all cached results?
+                  </p>
+
                   <div className="flex gap-2">
                     <button
                       onClick={() => setShowClearConfirm(false)}
@@ -89,6 +79,7 @@ export function TopBar({
                     >
                       Cancel
                     </button>
+
                     <button
                       onClick={handleClearCache}
                       disabled={isClearing}
@@ -100,6 +91,51 @@ export function TopBar({
                 </div>
               )}
             </div>
+          </div>
+
+
+          {/* CENTER: Application Title */}
+          <div className="text-center">
+            <h1 className="text-lg font-semibold text-foreground">
+              General Knowledge Assistant
+            </h1>
+          </div>
+
+
+          {/* RIGHT SIDE: Model Selection + New Chat */}
+          <div className="flex items-center justify-end gap-3">
+
+            {/* Model Tier Selector */}
+            <div className="flex items-center bg-muted rounded-lg p-1">
+
+              {/* Lite */}
+              <button
+                onClick={() => onModelTierChange('lite')}
+                className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${
+                  modelTier === 'lite'
+                    ? 'bg-accent text-accent-foreground'
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
+                title="Lite: faster responses"
+              >
+                Lite
+              </button>
+
+              {/* Standard */}
+              <button
+                onClick={() => onModelTierChange('standard')}
+                className={`px-3 py-1.5 rounded text-sm font-medium transition-colors ${
+                  modelTier === 'standard'
+                    ? 'bg-accent text-accent-foreground'
+                    : 'text-muted-foreground hover:text-foreground'
+                }`}
+                title="Standard: more accurate responses"
+              >
+                Standard
+              </button>
+
+            </div>
+
 
             {/* New Chat Button */}
             <Button
@@ -110,9 +146,11 @@ export function TopBar({
             >
               New Chat
             </Button>
+
           </div>
         </div>
       </div>
+
 
       {/* Toast Notification */}
       {clearToast && (

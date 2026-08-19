@@ -33,13 +33,6 @@ export function HomeScreen({ onSubmit, onClearCache, isClearing }: HomeScreenPro
           className="glow-border w-full px-5 py-4 rounded-xl bg-muted/30 text-base text-foreground placeholder:text-muted-foreground focus:outline-none"
         />
       </form>
-      <button
-        onClick={onClearCache}
-        disabled={isClearing}
-        className="glow-border px-4 py-2 rounded-lg text-sm text-muted-foreground disabled:opacity-50"
-      >
-        {isClearing ? 'Clearing...' : 'Clear Cache'}
-      </button>
     </div>
   );
 }
