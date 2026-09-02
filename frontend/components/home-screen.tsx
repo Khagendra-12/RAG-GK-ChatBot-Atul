@@ -1,6 +1,7 @@
 'use client';
 
 import { useState } from 'react';
+import { GlowBorder } from '@/components/glow-border';
 
 interface HomeScreenProps {
   onSubmit: (question: string) => void;
@@ -25,13 +26,15 @@ export function HomeScreen({ onSubmit, onClearCache, isClearing }: HomeScreenPro
         What do you want to know?
       </h1>
       <form onSubmit={handleSubmit} className="w-full max-w-xl">
-        <input
-          autoFocus
-          value={value}
-          onChange={(e) => setValue(e.target.value)}
-          placeholder="Ask anything..."
-          className="glow-border w-full px-5 py-4 rounded-xl bg-muted/30 text-base text-foreground placeholder:text-muted-foreground focus:outline-none"
-        />
+        <GlowBorder radius={12} inline={false} spread={220}>
+          <input
+            autoFocus
+            value={value}
+            onChange={(e) => setValue(e.target.value)}
+            placeholder="Ask anything..."
+            className="w-full px-5 py-4 rounded-xl bg-muted/30 text-base text-foreground placeholder:text-muted-foreground focus:outline-none"
+          />
+        </GlowBorder>
       </form>
     </div>
   );

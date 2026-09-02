@@ -5,7 +5,6 @@ import { sendChatMessage, clearCache, getConversation, Message, ConversationMess
 import { TopBar } from '@/components/top-bar';
 import { ChatMessage } from '@/components/chat-message';
 import { MessageInput } from '@/components/message-input';
-import { ChatHistoryMenu } from '@/components/chat-history-menu';
 import { HomeScreen } from '@/components/home-screen';
 
 export default function Page() {
@@ -179,11 +178,9 @@ export default function Page() {
           onModelTierChange={setModelTier}
           onNewChat={handleNewChat}
           onClearCache={handleClearCache}
+          onSelectConversation={handleSelectConversation}
           isClearing={isClearing}
         />
-        <div className="pr-4">
-          <ChatHistoryMenu onSelectConversation={handleSelectConversation} />
-        </div>
       </div>
 
       <div className="flex-1 overflow-y-auto">

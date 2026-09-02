@@ -1,7 +1,8 @@
 'use client';
 
-import { Trash2, History } from 'lucide-react';
+import { Trash2 } from 'lucide-react';
 import { Button } from '@/components/ui/button';
+import { ChatHistoryMenu } from '@/components/chat-history-menu';
 import { useState } from 'react';
 
 interface TopBarProps {
@@ -9,7 +10,7 @@ interface TopBarProps {
   onModelTierChange: (tier: 'lite' | 'standard' | null) => void;
   onNewChat: () => void;
   onClearCache: () => Promise<void>;
-  onHistory: () => void;
+  onSelectConversation: (conversationId: string) => void;
   isClearing?: boolean;
 }
 
@@ -18,7 +19,7 @@ export function TopBar({
   onModelTierChange,
   onNewChat,
   onClearCache,
-  onHistory,
+  onSelectConversation,
   isClearing,
 }: TopBarProps) {
   const [showClearConfirm, setShowClearConfirm] = useState(false);
@@ -46,14 +47,7 @@ export function TopBar({
           <div className="flex items-center gap-3">
 
             {/* Chat History Button */}
-            <button
-              onClick={onHistory}
-              className="flex items-center gap-2 px-3 py-1.5 text-sm font-medium text-muted-foreground hover:text-foreground rounded-lg hover:bg-muted transition-colors"
-              title="Chat history"
-            >
-              <History className="w-4 h-4" />
-              History
-            </button>
+            <ChatHistoryMenu onSelectConversation={onSelectConversation} />
 
             {/* Clear Cache Button */}
             <div className="relative">

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { getConversations, ConversationSummary } from '@/lib/api';
+import { GlowBorder } from '@/components/glow-border';
 
 interface ChatHistoryMenuProps {
   onSelectConversation: (conversationId: string) => void;
@@ -35,9 +36,11 @@ export function ChatHistoryMenu({ onSelectConversation }: ChatHistoryMenuProps) 
 
   return (
     <div className="relative">
-      <button onClick={handleToggle} className="glow-border px-3 py-2 rounded-lg text-sm text-foreground">
-        History
-      </button>
+      <GlowBorder radius={8}>
+        <button onClick={handleToggle} className="px-3 py-2 rounded-lg text-sm text-foreground">
+          History
+        </button>
+      </GlowBorder>
       {open && (
         <div className="absolute top-full mt-2 right-0 w-72 max-h-96 overflow-y-auto rounded-lg border border-border bg-background shadow-lg z-50">
           {loading && <div className="p-4 text-sm text-muted-foreground">Loading...</div>}

@@ -2,6 +2,7 @@
 
 import { useState } from 'react';
 import { clearCache } from '@/lib/api';
+import { GlowBorder } from '@/components/glow-border';
 
 export function ClearCacheButton() {
   const [confirming, setConfirming] = useState(false);
@@ -25,9 +26,11 @@ export function ClearCacheButton() {
 
   return (
     <div className="relative">
-      <button onClick={handleClick} className="glow-border px-3 py-2 rounded-lg text-sm">
-        {confirming ? 'Confirm clear?' : 'Clear Cache'}
-      </button>
+      <GlowBorder radius={8}>
+        <button onClick={handleClick} className="px-3 py-2 rounded-lg text-sm">
+          {confirming ? 'Confirm clear?' : 'Clear Cache'}
+        </button>
+      </GlowBorder>
       {message && (
         <div className="absolute top-full mt-2 right-0 text-xs bg-muted px-3 py-1.5 rounded whitespace-nowrap">
           {message}
