@@ -6,6 +6,7 @@ import { TopBar } from '@/components/top-bar';
 import { ChatMessage } from '@/components/chat-message';
 import { MessageInput } from '@/components/message-input';
 import { HomeScreen } from '@/components/home-screen';
+import { ScannerBackground } from '@/components/scanner-background';
 
 export default function Page() {
   const [messages, setMessages] = useState<Message[]>([]);
@@ -172,16 +173,15 @@ export default function Page() {
 
   return (
     <div className="flex flex-col h-screen bg-background">
-      <div className="flex items-center justify-between">
-        <TopBar
-          modelTier={modelTier}
-          onModelTierChange={setModelTier}
-          onNewChat={handleNewChat}
-          onClearCache={handleClearCache}
-          onSelectConversation={handleSelectConversation}
-          isClearing={isClearing}
-        />
-      </div>
+      <ScannerBackground />
+      <TopBar
+        modelTier={modelTier}
+        onModelTierChange={setModelTier}
+        onNewChat={handleNewChat}
+        onClearCache={handleClearCache}
+        onSelectConversation={handleSelectConversation}
+        isClearing={isClearing}
+      />
 
       <div className="flex-1 overflow-y-auto">
         <div className="max-w-5xl mx-auto px-4 h-full">
