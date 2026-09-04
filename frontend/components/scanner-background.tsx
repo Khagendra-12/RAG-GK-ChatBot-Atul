@@ -171,18 +171,18 @@ interface ScannerBackgroundProps {
 export function ScannerBackground({
   // Midnight/royal blue -> neon violet -> soft lavender highlight
   color1 = '#141a4d',
-  color2 = '#7c3aed',
-  color3 = '#d8b4fe',
+  color2 = '#71c2f8',
+  color3 = '#ffee59',
   speed = 0.35,
   sweepSpeed = 0.18,
   sweepWidth = 1.8,
   sweepFalloff = 6,
-  scale = 1.6,
-  frequency = 1.6,
-  ripple = 0.2,
+  scale = 2.0,
+  frequency = 2.5,
+  ripple = 0.1,
   bandDensity = 9,
   lineSharpness = 5,
-  glow = 0.18,
+  glow = 0.48,
   scanDirection = 'vertical',
   colorSpread = 0.6,
   brightness = 0.9,
@@ -191,11 +191,11 @@ export function ScannerBackground({
   vignette = 0.55,
   scanline = true,
   grain = true,
-  grainIntensity = 0.04,
-  opacity = 0.4,
+  grainIntensity = 0.4,
+  opacity = 0.75,
   mouseInteraction = true,
-  mouseRadius = 0.5,
-  mouseStrength = 0.4,
+  mouseRadius = 0.75,
+  mouseStrength = 0.75,
   className = '',
 }: ScannerBackgroundProps) {
   const containerRef = useRef<HTMLDivElement>(null);
@@ -407,7 +407,7 @@ export function ScannerBackground({
     <div
       ref={containerRef}
       className={`fixed inset-0 -z-10 pointer-events-none ${className}`}
-      style={{ width: '100vw', height: '100vh' }}
+      style={{ width: '100vw', height: '100vh', position: 'fixed', top: 0, left: 0 }}
     />
   );
 }

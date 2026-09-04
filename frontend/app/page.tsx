@@ -142,8 +142,6 @@ export default function Page() {
     }, 100);
   };
 
-  // Turns a stored conversation (question/answer pairs) into the flat
-  // user/assistant message list the UI already knows how to render.
   const expandConversation = (turns: ConversationMessage[]): Message[] => {
     const expanded: Message[] = [];
     turns.forEach((turn, i) => {
@@ -172,7 +170,7 @@ export default function Page() {
   };
 
   return (
-    <div className="flex flex-col h-screen bg-background">
+    <div className="flex flex-col h-screen">
       <ScannerBackground />
       <TopBar
         modelTier={modelTier}
