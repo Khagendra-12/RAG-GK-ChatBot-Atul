@@ -1,7 +1,8 @@
 fastapi
-uvicorn
-openai
-tavily-python
+uvicorn[standard]
+pydantic
 python-dotenv
+tavily-python
+openai
 sentence-transformers
 requests
