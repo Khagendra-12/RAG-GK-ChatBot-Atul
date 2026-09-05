@@ -14,8 +14,8 @@ export function SourceCard({ source, number, isHighlighted }: SourceCardProps) {
   const domain = new URL(source.url).hostname.replace('www.', '');
 
   return (
-    <GlowBorder radius={8} inline={false} sweepOnMount={false}>
-      
+    <GlowBorder radius={8} inline={false} sweepOnMount={false} className="w-full">
+      <a
         href={source.url}
         target="_blank"
         rel="noopener noreferrer"
@@ -25,7 +25,7 @@ export function SourceCard({ source, number, isHighlighted }: SourceCardProps) {
             ? 'bg-accent/10 border-accent shadow-sm'
             : 'bg-muted/30 border-border hover:bg-muted/50 hover:border-border/80'
         }`}
-      <a>
+      >
         <div className="flex items-start gap-3">
           <div className="flex-shrink-0 w-6 h-6 rounded-full bg-accent/20 flex items-center justify-center text-xs font-semibold text-accent">
             {number}

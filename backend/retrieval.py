@@ -1,5 +1,6 @@
 from sentence_transformers import SentenceTransformer, util
 import re
+import datetime
 
 _model = SentenceTransformer("all-MiniLM-L6-v2")
 
@@ -16,14 +17,28 @@ def chunk_text(text: str, chunk_size: int = 400, overlap: int = 50) -> list[str]
     return chunks
 
 
-def source_recency_bonus(text: str, max_range: int = 5) -> float:
-    """Small positive bonus for sources that look like a single recent
-    event, not a full override -- relevance stays the primary signal."""
-    years = [int(y) for y in re.findall(r"\b(?:19|20)\d{2}\b", text)]
-    if not years:
-        return 0.0
-    year_range = max(years) - min(years)
-    return 0.08 if year_range <= max_range else 0.0  # small nudge, not a re-sort
+def source_recency_bonus(source: dict) -> float:
+    """Boost sources that are recently published to fix LLM recency bias issues."""
+    pub_date = source.get("published_date") or ""
+    text = source.get("text", "")
+    
+    current_year = datetime.now().year
+    last_year = current_year - 1
+    
+    if str(current_year) in pub_date:
+        return 0.6
+    if str(last_year) in pub_date:
+        return 0.3
+        
+    years = [int(y) for y in re.findall(r"\b(?:20)\d{2}\b", text)]
+    if years:
+        max_year = max(years)
+        if max_year >= current_year:
+            return 0.4
+        elif max_year == last_year:
+            return 0.2
+            
+    return 0.0
 
 
 def rerank_sources(question: str, sources: list[dict], top_k_chunks: int = 5) -> list[dict]:
@@ -58,7 +73,7 @@ def rerank_sources(question: str, sources: list[dict], top_k_chunks: int = 5) ->
     reranked = []
     for src_idx, chunks in source_chunks.items():
         source = sources[src_idx]
-        combined_score = source_best_score[src_idx] + source_recency_bonus(source["text"])
+        combined_score = source_best_score[src_idx] + source_recency_bonus(source)
         reranked.append({
             "title": source["title"],
             "url": source["url"],

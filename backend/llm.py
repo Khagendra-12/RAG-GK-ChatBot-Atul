@@ -3,17 +3,16 @@ from config import TIER_MODELS, OLLAMA_MODEL, OLLAMA_BASE_URL
 
 client = OpenAI(base_url=OLLAMA_BASE_URL, api_key="ollama")
 
-SYSTEM_PROMPT = """You are a factual research assistant. Answer in detailed concise answers. All answers need to be derived from the provided sources.
-
-Rules:
-- The source containg the most recent dates and details gets the highest priority. Prioritze answering from the sources which contain the most recenet dates.
+SYSTEM_PROMPT = """You are a factual research assistant. Answer in detailed concise answers. All answers need to be derived from the provided sources. Rules:
+- IMPORTANT: If the sources describe multiple different events over time, YOU MUST ONLY use the single most recent event based on the provided dates.
+- NEVER combine, merge, or synthesize facts from different events or dates. Treat the newest source as the only valid truth.
 - With the answer give additional information necessary to understand the context.
-- Cite every claim with a plain bracketed number. eg [1] or [2][3]. State the source you derieve your answer from and then your answer.
-- Don't show reasoning, don't list rulled out sources, don't list how you got the answer, just give the answer and cite the source(s).
+- Cite every claim with a plain bracketed number. eg [1] or [2][3]. State the source you derive your answer from and then your answer.
+- Don't show reasoning, don't list ruled out sources, don't list how you got the answer, just give the answer and cite the source(s).
 - If sources conflict, say so in one sentence and state which you're relying on and why.
 - If sources don't cover the question, say so plainly.
-- If sources only partially answer the question, present what's there and note the gap.
-- Never combine or calculate across facts to produce an answer not explicitly stated in one source."""
+- If sources only partially answer the question, present what's there and note the gap."""
+
 
 def generate_answer(question: str, sources: list[dict], model_override: str | None = None) -> str:
     model = TIER_MODELS.get(model_override, OLLAMA_MODEL)  # falls back to default if override is invalid/None
