@@ -6,6 +6,7 @@ export const API_ENDPOINTS = {
   CLEAR_CACHE: `${API_BASE_URL}/clear-cache`,
   MODELS: `${API_BASE_URL}/models`,
   HEALTH: `${API_BASE_URL}/health`,
+  CONVERSATIONS: `${API_BASE_URL}/conversations`,
 } as const;
 
 export interface Source {
