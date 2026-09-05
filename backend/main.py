@@ -86,7 +86,17 @@ async def get_conversation_messages(conversation_id: str):
 
 @app.get("/health")
 async def health():
-    return {"status": "ok"}
+    try:
+        check_ollama_available()
+        return {
+            "status": "ready",
+            "message": "AI model is warmed up and ready."
+        }
+    except Exception as e:
+        return {
+            "status": "loading",
+            "message": "Backend is initializing or loading model weights into memory... Please wait a moment and try again.",
+        }
 
 
 @app.delete("/conversations/{conversation_id}")

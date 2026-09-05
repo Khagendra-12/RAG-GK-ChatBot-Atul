@@ -10,6 +10,8 @@ MAX_AGE_SECONDS = 30 * 24 * 60 * 60  # 30 days
 
 def _get_conn():
     conn = sqlite3.connect(DB_PATH)
+    
+    # Create table with current schema
     conn.execute("""
         CREATE TABLE IF NOT EXISTS chat_history (
             id INTEGER PRIMARY KEY AUTOINCREMENT,
@@ -21,6 +23,11 @@ def _get_conn():
             timestamp REAL NOT NULL
         )
     """)
+    
+    columns = [row[1] for row in conn.execute("PRAGMA table_info(chat_history)").fetchall()]
+    if "keywords_used" not in columns:
+        conn.execute("ALTER TABLE chat_history ADD COLUMN keywords_used TEXT")
+        
     conn.execute("""
         CREATE INDEX IF NOT EXISTS idx_conversation_id
         ON chat_history(conversation_id)

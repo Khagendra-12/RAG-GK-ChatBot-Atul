@@ -1,7 +1,14 @@
 'use client';
 
 import { useState, useRef, useEffect } from 'react';
-import { sendChatMessage, clearCache, getConversation, Message, ConversationMessage } from '@/lib/api';
+import {
+  sendChatMessage,
+  clearCache,
+  getConversation,
+  getBackendStatus,
+  Message,
+  ConversationMessage,
+} from '@/lib/api';
 import { TopBar } from '@/components/top-bar';
 import { ChatMessage } from '@/components/chat-message';
 import { MessageInput } from '@/components/message-input';
@@ -13,9 +20,39 @@ export default function Page() {
   const [modelTier, setModelTier] = useState<'lite' | 'standard' | null>('standard');
   const [isLoading, setIsLoading] = useState(false);
   const [isClearing, setIsClearing] = useState(false);
+  const [conversationId, setConversationId] = useState<string | null>(null);
+
+  // Backend Health & Initialization state
+  const [backendReady, setBackendReady] = useState(false);
+  const [statusMessage, setStatusMessage] = useState('Checking backend status...');
+
   const messagesEndRef = useRef<HTMLDivElement>(null);
   const loadingStageRef = useRef<NodeJS.Timeout>();
-  const [conversationId, setConversationId] = useState<string | null>(null);
+
+  // Poll backend health status on startup until the model is warm and ready
+  useEffect(() => {
+    let isMounted = true;
+
+    const checkStatus = async () => {
+      const health = await getBackendStatus();
+      if (!isMounted) return;
+
+      if (health.status === 'ready') {
+        setBackendReady(true);
+        setStatusMessage('');
+      } else {
+        setBackendReady(false);
+        setStatusMessage(health.message);
+        setTimeout(checkStatus, 2000);
+      }
+    };
+
+    checkStatus();
+
+    return () => {
+      isMounted = false;
+    };
+  }, []);
 
   const scrollToBottom = () => {
     messagesEndRef.current?.scrollIntoView({ behavior: 'smooth' });
@@ -50,6 +87,8 @@ export default function Page() {
   }, [isLoading]);
 
   const handleSendMessage = async (question: string) => {
+    if (!backendReady) return;
+
     const userMessage: Message = {
       id: `user-${Date.now()}`,
       type: 'user',
@@ -170,8 +209,20 @@ export default function Page() {
   };
 
   return (
-    <div className="flex flex-col h-screen">
+    <div className="flex flex-col h-screen relative">
       <ScannerBackground />
+
+      {/* Backend Startup Overlay */}
+      {!backendReady && (
+        <div className="fixed inset-0 z-50 bg-background/80 backdrop-blur-md flex flex-col items-center justify-center gap-4">
+          <div className="w-8 h-8 border-4 border-accent border-t-transparent rounded-full animate-spin" />
+          <div className="text-center space-y-1">
+            <h3 className="text-lg font-semibold text-foreground">Starting AI System</h3>
+            <p className="text-sm text-muted-foreground">{statusMessage}</p>
+          </div>
+        </div>
+      )}
+
       <TopBar
         modelTier={modelTier}
         onModelTierChange={setModelTier}
@@ -203,7 +254,7 @@ export default function Page() {
       {messages.length > 0 && (
         <MessageInput
           onSubmit={handleSendMessage}
-          disabled={isLoading}
+          disabled={isLoading || !backendReady}
           placeholder="Ask a question about news, politics, stocks, laws, or current events..."
         />
       )}

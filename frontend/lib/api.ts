@@ -109,3 +109,21 @@ export async function clearCache(): Promise<{ cleared_entries: number }> {
   return response.json();
 }
 
+export interface HealthResponse {
+  status: 'ready' | 'loading' | 'offline';
+  message: string;
+}
+
+export async function getBackendStatus(): Promise<HealthResponse> {
+  try {
+    const res = await fetch('http://localhost:8000/health', {
+      cache: 'no-store',
+    });
+    if (!res.ok) {
+      return { status: 'loading', message: 'Backend is warming up...' };
+    }
+    return await res.json();
+  } catch {
+    return { status: 'offline', message: 'Connecting to backend server...' };
+  }
+}

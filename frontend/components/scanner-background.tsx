@@ -172,7 +172,7 @@ export function ScannerBackground({
   // Midnight/royal blue -> neon violet -> soft lavender highlight
   color1 = '#141a4d',
   color2 = '#71c2f8',
-  color3 = '#ffee59',
+  color3 = '#f7ff58',
   speed = 0.35,
   sweepSpeed = 0.18,
   sweepWidth = 1.8,

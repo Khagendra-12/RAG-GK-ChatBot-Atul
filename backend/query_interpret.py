@@ -1,6 +1,6 @@
 
 from openai import OpenAI
-from config import OLLAMA_BASE_URL, OLLAMA_MODEL
+from config import OLLAMA_BASE_URL, OLLAMA_MODEL, TIER_MODELS
 
 client = OpenAI(base_url=OLLAMA_BASE_URL, api_key="ollama")
 
@@ -31,7 +31,7 @@ Examples:
 def interpret_query(question: str) -> dict:
     try:
         response = client.chat.completions.create(
-            model=OLLAMA_MODEL,
+            model=TIER_MODELS["lite"], # Force the 1.5b model for this prep-step
             messages=[
                 {"role": "system", "content": INTERPRET_SYSTEM_PROMPT},
                 {"role": "user", "content": question},
