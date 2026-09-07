@@ -39,7 +39,7 @@ if not exist "backend\.env" (
 )
 
 echo Starting backend...
-start "Backend" cmd /k "cd backend && .ragenv\Scripts\activate && uvicorn main:app --port 8000"
+start "Backend" cmd /k ".ragenv\Scripts\activate && cd backend && uvicorn main:app --port 8000"
 
 timeout /t 4 /nobreak >nul
 
