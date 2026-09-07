@@ -31,7 +31,7 @@ if [ ! -f "backend/.env" ]; then
 fi
 
 echo "Starting backend..."
-(cd backend && source .ragenv/bin/activate && uvicorn main:app --port 8000) &
+(source .ragenv/bin/activate && cd backend && uvicorn main:app --port 8000) &
 
 sleep 4
 
