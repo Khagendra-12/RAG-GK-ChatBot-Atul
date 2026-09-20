@@ -42,7 +42,7 @@ export function ChatHistoryMenu({ onSelectConversation }: ChatHistoryMenuProps) 
         </button>
       </GlowBorder>
       {open && (
-        <div className="absolute top-full mt-2 right-0 w-72 max-h-96 overflow-y-auto rounded-lg border border-border bg-background shadow-lg z-50">
+        <div className="absolute top-full mt-2 left-0 w-72 max-h-96 overflow-y-auto rounded-lg border border-border bg-background shadow-lg z-50">
           {loading && <div className="p-4 text-sm text-muted-foreground">Loading...</div>}
           {!loading && conversations.length === 0 && (
             <div className="p-4 text-sm text-muted-foreground">No past chats yet.</div>
